@@ -49,3 +49,5 @@ const initSharkwords = () => {
 };
 
 initSharkwords();
+
+// TODO: If the user loses, fill in the rest of the letter boxes with the rest of the word.

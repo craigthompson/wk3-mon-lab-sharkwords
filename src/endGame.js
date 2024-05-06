@@ -4,10 +4,8 @@ import { guessedEntireWord } from "./word.js";
  * Disables all of the guess buttons.
  */
 function disableGuessButtons() {
-  // get nodeList of children nodes
   const guessButtons = document.querySelector("#letter-buttons").childNodes;
-  // Converts nodeList to array and iterates through the array
-  [...guessButtons].forEach((btn) => (btn.disabled = true));
+  guessButtons.forEach((btn) => (btn.disabled = true));
 }
 
 /**
