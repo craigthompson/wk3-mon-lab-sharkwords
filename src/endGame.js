@@ -4,7 +4,9 @@ import { guessedEntireWord } from "./word.js";
  * Disables all of the guess buttons.
  */
 function disableGuessButtons() {
+  // get nodeList of children nodes
   const guessButtons = document.querySelector("#letter-buttons").childNodes;
+  // Converts nodeList to array and iterates through the array
   [...guessButtons].forEach((btn) => (btn.disabled = true));
 }
 
@@ -15,6 +17,14 @@ function disableGuessButtons() {
  */
 function displayGameStatus(message) {
   document.querySelector("#game-status").innerText = message;
+}
+
+function indicateLoss() {
+  document.querySelector("body").classList.add("user-lost");
+}
+
+function indicateWin() {
+  document.querySelector("body").classList.add("user-won");
 }
 
 /**
@@ -28,10 +38,12 @@ function checkEndOfGame(letterBoxes, numWrong) {
   if (numWrong === 5) {
     disableGuessButtons();
     displayGameStatus("You lose! 😔");
+    indicateLoss();
   } else {
     if (guessedEntireWord(letterBoxes)) {
       disableGuessButtons();
       displayGameStatus("You win! 🎉");
+      indicateWin();
     }
   }
 }

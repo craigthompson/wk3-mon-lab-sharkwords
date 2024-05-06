@@ -51,9 +51,10 @@ function revealLetterInWord(letterBoxes, letter) {
  * @returns {Boolean} true if the entire word has been guessed, otherwise false.
  */
 function guessedEntireWord(letterBoxes) {
+  const arrLetterBoxes = [...letterBoxes]; // Converts nodeList to array
   return (
-    [...letterBoxes].filter((letterBox) => letterBox.innerText === "")
-      .length === 0
+    arrLetterBoxes.filter((letterBox) => letterBox.innerText === "").length ===
+    0
   );
 }
 

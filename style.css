@@ -4,6 +4,14 @@ body {
   background-color: lightblue;
 }
 
+body.user-won {
+  background-color: lightgreen;
+}
+
+body.user-lost {
+  background-color: lightcoral;
+}
+
 section {
   display: flex;
   justify-content: center;
@@ -44,6 +52,6 @@ button {
   cursor: pointer;
 }
 
-button[disabled='true'] {
+button[disabled="true"] {
   cursor: default;
 }
