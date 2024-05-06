@@ -43,7 +43,7 @@ section {
   align-items: flex-end;
 }
 
-button {
+button.letter {
   width: 1.5em;
   height: 1.5em;
   font-size: 0.6em;

@@ -18,6 +18,12 @@ document.querySelector("#app").innerHTML = `
   <section id="word-container"></section>
 
   <section id="letter-buttons"></section>
+
+  <section id="reset-game">
+    <form>
+      <button type="submit">Reset</button>
+    </form>
+  </section>
 `;
 
 const initSharkwords = () => {
