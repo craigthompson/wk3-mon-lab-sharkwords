@@ -1,5 +1,12 @@
 const alphabet = "abcdefghijklmnopqrstuvwxyz";
 
+/**
+ * Sets up the letter guessing buttons.
+ *
+ * @param {*} element
+ * @param {*} handleGuess
+ * @returns
+ */
 function setupGuesses(element, handleGuess) {
   // Convert alphabet string to an array of each character and iterate over the array.
   alphabet.split("").forEach((letter) => {
