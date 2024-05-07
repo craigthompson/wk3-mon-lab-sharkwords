@@ -1,0 +1,359 @@
+Lab: Vite Sharkwords#
+Build a word-guessing game called Sharkwords with Vite, while working with modular code. Then, see how Vite bundles your code into JavaScript that can run in the browser.
+
+Setup#
+Your starter code is a Node project based on Vite’s vanilla JavaScript template. Download it with dmget:
+
+dmget wb-vite-sharkwords
+Then, cd into the project directory, install the dependencies, and open the project in VS Code:
+
+cd ~/src/wb-vite-sharkwordsnpm installcode .
+Don’t forget to initialize a Git repository, make an initial commit, and push your code to GitHub.
+
+What you’re building#
+Your goal is to build a game called Sharkwords. The starter code you just downloaded comes with a Sharkwords demo you can play to get an idea of how the final product will work.
+
+How to run the demo#
+View the demo by running the command below:
+
+npm run demo
+Your browser will automatically open to a page that looks like this:
+
+Screenshot of Sharkwords demo
+
+You can quit the demo by pressing Ctrl-C in the terminal. Continue reading to learn how to play the game.
+
+How to play Sharkwords#
+Your goal is to guess the secret word.
+
+Make a guess by clicking on a letter.
+
+Be careful—incorrect guesses will cause sharks to swim closer and closer to the swimmer.
+
+You can make five mistakes before the swimmer gets eaten.
+
+For debugging purposes, you can view the correct word in the browser’s JavaScript console.
+
+About the starter code#
+The entrypoint for Sharkwords is main.js. There are also several modules in src as well as a folder of images in src/images.
+
+You’ll complete the functions in the src/\*.js files. Then, you’ll import them in main.js to implement the features of Sharkwords.
+
+Generate a random word#
+To generate a random word, you’ll use the sample function from the lodash.sample package and complete the function in src/randomWord.js.
+
+Start the dev server#
+First, start the dev server so you can view any changes you make as you go.
+
+npm run dev
+Install lodash.sample#
+The lodash.sample package exports Lodash’s sample function. The function will return a random element from an array.
+
+In order to use sample, you’ll need install lodash.sample with npm (you can create a new terminal window in VS Code by running Terminal: Create New Terminal in the command palette.)
+
+npm install lodash.sample
+This should add lodash.sample to the dependencies section in package.json.
+
+Use sample to implement getRandomWord#
+Now you can use sample to implement getRandomWord in src/randomWord.js. It should return a random word from the words array.
+
+src/randomWord.js#
+import sample from 'lodash.sample';
+
+const words = [
+'strawberry',
+'orange',
+'apple',
+'banana',
+'pineapple',
+'kiwi',
+'peach',
+'pecan',
+'eggplant',
+'durian',
+'peanut',
+'chocolate',
+];
+
+function getRandomWord() {
+return sample(words);
+}
+Use getRandomWord in main.js#
+You’ll call getRandomWord in main.js to assign the value of the word variable to a random word (right now, its value is hardcoded to 'word'.) To do this:
+
+Export getRandomWord at the bottom of src/randomWord.js:
+
+src/randomWord.js#
+// (...excerpt)
+export default getRandomWord; // why a default export instead of a named export?
+Import it at the top of main.js
+
+main.js#
+import getRandomWord from './src/randomWord.js';
+// (...excerpt)
+Call the function to set a value for const word:
+
+main.js#
+// (...in the initSharkwords function)
+const word = getRandomWord();
+View your changes in the browser#
+In the browser, open the JavaScript console. Check that you see the correct output. This word should change when you refresh the page.
+
+Set up shark images#
+Now you’ll complete the function in src/sharkImage.js to display a shark image on the page.
+
+Implement setSharkImage#
+You’ll call setSharkImage in main.js to display an image in the #shark-img element like so:
+
+setSharkImage(document.querySelector('#shark-img'), numWrong);
+Open src/sharkImage.js. Notice that we import the images in src/images at the top of the file and put them in an array called images:
+
+src/sharkImage.js#
+import guess0 from './images/guess0.png';
+import guess1 from './images/guess1.png';
+import guess2 from './images/guess2.png';
+import guess3 from './images/guess3.png';
+import guess4 from './images/guess4.png';
+import guess5 from './images/guess5.png';
+
+const images = [guess0, guess1, guess2, guess3, guess4, guess5];
+
+function setSharkImage(element, imageIdx) {}
+Finish setSharkImage so it adds an <img> tag to the element parameter. You can do this by setting element.innerHTML to a template string, and template in an image from the images array:
+
+element.innerHTML = `<img src="${images[imageIdx]}"/>`;
+Import and call setSharkImage#
+Add an export statement to the bottom of src/sharkImage.js to export setSharkImage.
+
+Add an import statement to the top of main.js to import setSharkImage.
+
+Call it in initSharkwords to display the image.
+
+Check your work in the browser#
+After you save your changes to main.js, you should see the src/images/guess0.png image appear in the browser.
+
+Complete src/word.js module#
+The src/word.js is the largest module in this project.
+
+src/word.js#
+let word;
+
+function setupWord(element, initWord) {}
+
+function isLetterInWord(letter) {}
+
+function revealLetterInWord(letter) {}
+It has three functions:
+
+setupWord
+This function is called to generate the blank spaces that represent letters in our secret word. For example, if the word is array it’ll generate five blank spaces: \_ \_ \_ \_ \_.
+
+It will also set a value for the word variable; word is a module-scoped variable will be used in the helper functions, isLetterInWord and revealLetterInWord.
+
+isLetterInWord
+This should return true if the given letter is in word. Otherwise, it should return false. For example, if word is 'array', isLetterInWord('a') should return true.
+
+revealLetterInWord
+This is called when the user makes a correct guess. It’ll display the letters in their correct locations according to the value of word. For example, if word is 'array', then revealLetterInWord('a') will cause the game to display a \_ _ a _.
+
+You’ll export all three functions and call them in main.js.
+
+Implement setupWord#
+You’ll call setupWord in main.js like this:
+
+setupWord(document.querySelector('#word-container'), word);
+Add code to setupWord so it:
+
+Sets the value of word to initWord.
+
+Inserts <div class="letter-box"></div> to element for each letter in word.
+
+Solution
+
+Call setupWord#
+Export setupWord so you can import and call it in main.js. Check your work in the browser and verify that you see blank lines for each letter in the word.
+
+Implement isLetterInWord#
+Finish isLetterInWord so it returns true if letter is in word and false if letter isn’t in word. A good way to do this is using the includes() String method.
+
+Solution
+
+Call isLetterInWord#
+Export isLetterInWord so you can import and call it in main.js. To test that it works, add the following lines of code inside initSharkwords (you can delete these later):
+
+console.log(isLetterInWord(word[0]), '(should be true)');
+console.log(isLetterInWord('1'), '(should be false)');
+Check your work in the browser and verify that you see the correct output in your browser’s JavaScript console.
+
+Implement revealLetterInWord#
+Add code to revealLetterInWord so it fills in a .letter-box element with the given letter.
+
+One way to do this is to get a list of all .letter-box elements with document.querySelectorAll. Then, you can loop over each letter in word and use the letter’s index to find its corresponding .letter-box element.
+
+Solution
+
+Call revealLetterInWord#
+Export revealLetterInWord so you can import and call it in main.js. To test that it works, add the following line of code inside initSharkwords (you can delete it later):
+
+reveaLetterInWord(word[0]);
+Check your work in the browser and verify that you see the letter(s) revealed in the browser.
+
+Set up and handle guesses#
+This time, you’ll integrate the setupGuesses function that’s already been written in src/guess.js.
+
+Figure out how setupGuesses works#
+Open src/guess.js and take a look at the code in setupGuesses.
+
+src/word.js#
+const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+
+function setupGuesses(element, handleGuess) {
+alphabet.split('').forEach((letter) => {
+const btn = document.createElement('button');
+btn.innerText = letter;
+btn.addEventListener('click', (e) => handleGuess(e, letter));
+element.append(btn);
+});
+}
+
+export default setupGuesses;
+Add comments to describe what each line of code is doing. If you need a hint, add the following to initSharkwords in main.js and check your browser to see what happens (you’ll have to import setupGuesses first):
+
+const handleGuess = (guessEvent, letter) => {
+console.log(`guessEvent is: ${guessEvent}`);
+console.log(`letter is: ${letter}`);
+};
+
+setupGuesses(document.querySelector('#letter-buttons'), handleGuess);
+What’s happening in setupGuesses
+
+Handle guesses#
+You’ll need to build a handleGuess function so you can pass it to setupGuesses in main.js. If you haven’t already done so, add the following to initSharkwords:
+
+const handleGuess = (guessEvent, letter) => {
+// FIXME
+};
+
+setupGuesses(document.querySelector('#letter-buttons'), handleGuess);
+Replace the // FIXME comment with code that does the following:
+
+Disable the button that was clicked (you can do this by setting the button’s disabled attribute to true)
+
+How to get the button that was clicked
+
+Check if the letter is a correct guess or an incorrect guess
+
+If the button is a correct guess, reveal the letter in the word
+
+If the button is an incorrect guess, increment numWrong and update the shark image
+
+Solution
+
+Check your work#
+Test your code in the browser and make sure that:
+
+The letter buttons appear on the page
+
+When you click on a letter that’s in the word, the letter appears in the correct space(s)
+
+When you click on a letter that’s not in the word, the shark image changes
+
+End the game#
+The game should end if the user guesses all the letters in the word or if they’ve made five wrong guesses. When this happens, all the letter buttons should be disabled and the game should display either You win! or You lose!.
+
+You’ll need to check if the game should end each time the user makes a guess.
+
+Check if the game should end#
+Add code to the handleGuess function in main.js to check if the game should end. Remember, the game should end if the user has successfully guessed the word or if they’ve made five wrong guesses.
+
+When the game ends, disable all the letter buttons and display a message in the #game-status element. If the user won, display You win!. Otherwise, display You lose!.
+
+Detecting the win condition
+
+How to implement checking the win condition
+
+How to disable all the buttons
+
+Check your work#
+Check your work by playing the game in the browser. Make sure that:
+
+The game ends when you reach the win condition (by guessing the correct word)
+
+The game ends when you reach the lose condition (by making five incorrect guesses)
+
+If everything works, you’ve finished implementing Sharkwords!
+
+Generate a Vite build#
+Your final version of Sharkwords relies on code that doesn’t actually work in the browser:
+
+You can’t use import statements with CSS or image files
+
+lodash.sample is an npm package built for Node.js—not the browser
+
+Vite has to transform your source code into a bundle before it can run in the browser. Vite’s dev server performs these transformations automatically as you make changes to your code. This is only useful during development though—it doesn’t give you browser-compatible code that’s ready to publish. To get your bundled app, you’ll need to ask Vite to generate a build.
+
+How to create a build#
+Most Vite templates will provide a script that will build your code with npm run build. You’ll find the build script and other npm run scripts in package.json. Open package.json in VS Code and locate the scripts field.
+
+{
+"name": "vite-sharkwords",
+"private": true,
+"version": "0.0.0",
+"type": "module",
+"scripts": {
+"dev": "vite",
+"build": "vite build",
+"preview": "vite preview",
+"demo": "browser-sync --ss demo --port 5174"
+},
+"devDependencies": {
+"vite": "^4.3.9",
+"browser-sync": "^2.29.3"
+},
+"dependencies": {
+"lodash.sample": "^4.2.1"
+}
+}
+Notice that the build script is a shortcut for vite build. Use npm run to invoke this script in the terminal:
+
+npm run build
+That’s not much of a shortcut—npm run build is longer than vite build
+
+We were summarizing for the sake of brevity. Here’s a longer explanation for those who’re interested:
+
+Assuming you don’t have vite globally installed on your machine, you’ll get an error if you try to run vite build as-is:
+
+vite build
+By registering vite build as a script in package.json, npm will know to run the version of vite that’s inside node_modules. So, to be more precise, npm run build is a shortcut for node_modules/.bin/vite run build. You can try this for yourself by running this command in the terminal:
+
+~/src/wb-vite-sharkwords/node_modules/.bin/vite build
+Check out your bundled code#
+By default, Vite will generate your application bundle into a folder called dist/. Check the Explorer panel in VS Code. You should see a folder called dist that looks something like this:
+
+wb-vite-sharkwords/dist
+├── assets
+│ ├── guess0-d5de7101.png
+│ ├── guess1-490b0e2a.png
+│ ├── guess2-64bf2614.png
+│ ├── guess3-9d956e14.png
+│ ├── guess4-3382e55d.png
+│ ├── guess5-3812f7fb.png
+│ ├── index-7fb69961.css
+│ └── index-e1cec08c.js
+└── index.html
+Open the JavaScript file in VS Code—you’ll see that it looks very different from your source code. All the separate modules and npm packages you worked with in your source code have been combined into one file and converted into browser-compatible code.
+
+You’ll notice that the bundled code is completely illegible. As a part of bundling your code, Vite will also minify the resulting bundle in order to optimize it for the browser. Minified code has smaller file sizes, which leads to faster loading times. Minification algorithms will remove things that make code easier for humans to read like comments, whitespace, and nice variable names in order to achieve smaller, more optimal file sizes.
+
+(Optional) Add features#
+If you’re finished early, feel free to add features to the game. Here are some ideas:
+
+Make the UI look better with additional CSS
+
+Add a button to reset the game
+
+Add a level system (easy words, medium words, hard words…)
+
+Add a category system so the user can get a random word from a category (food, emotions, programming…)
+
+Refactor your code to make it look professional and polished (add comments!)
